@@ -38,9 +38,6 @@ public:
 
     int width;
 
-    int checkRightCount;
-    int checkAboveCount;
-
 private:
 
 

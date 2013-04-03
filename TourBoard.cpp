@@ -12,8 +12,6 @@ TourBoard::TourBoard(const int &w, const int &l)
     length = l;
     width = w;
     solutions = 0;
-    checkRightCount = 0;
-    checkAboveCount = 0;
     int square_id = 0;
     for(int x = 0; x < length; x++)
     {
@@ -55,29 +53,6 @@ bool TourBoard::firstRowVisited()
 
 }
 
-//If we are on the final column and there are squares above us 
-//that have yet to be visited, we can throw the path away
-//If the entire first row has been visited we cannot use this check.
-/*/bool TourBoard::checkAbove(c_Square &square)
-{
-      if(!firstRowVisited())
-      {
-        for(int i = 0; i < (square.position.x  - 1); i++)
-        {
-            for(int j = 0; j < board.at(i).size(); j++)
-            {
-                 if(board.at(i).at(j).visited == false )
-                 {
-                     checkAboveCount++;
-                     return false;
-                 }
-            }
-        }
-      }
-    return true;
-
-}/*/
-
 //if square above has not been visited we can throw this path away.
 bool TourBoard::checkAbove(c_Square &square)
 {
@@ -89,30 +64,6 @@ bool TourBoard::checkAbove(c_Square &square)
         return true;
 
 }
-
-//If we are on the final row and there are squares to our right 
-//that have yet to be visited, we can throw the path away
-//This check is only valid if the square located above has already been visited
-/*/
-bool TourBoard::checkRight(c_Square &square)
-{
-    if(board.at(square.position.x - 1).at(square.position.y).visited)
-    {
-        for(int i = 0; i < length - 1; i++)
-        {
-            for(int j = square.position.y + 1; j < (width - 1); j++)
-            {
-                if(board.at(i).at(j).visited == false)
-                 {
-                     checkRightCount++;
-                     return false;
-                 }
-            }
-        }
-    }
-    return true;
-
-}/*/
 
 //if square to the right has not been visited we can throw this path away.
 bool TourBoard::checkRight(c_Square &square)
@@ -126,7 +77,7 @@ bool TourBoard::checkRight(c_Square &square)
 
 }
 
-//if square to the right has not been visited we can throw this path away.
+//if square to the left has not been visited we can throw this path away.
 bool TourBoard::checkLeft(c_Square &square)
 {
     if(square.position.y != 0 && board.at(square.position.x).at(square.position.y - 1).visited == false)
@@ -208,15 +159,13 @@ int main()
     myfile.open ("solutions.txt");
     int x;
     int y;
-    clock_t tStart = clock();
     cout<<"Please enter board dimensions"<<endl;
     cout<<"X:";cin>>x;cout<<endl;
     cout<<"Y:";cin>>y;cout<<endl;
+    clock_t tStart = clock();
     TourBoard board(x,y);
     board.printBoard();
     board.travel(board.board.at(0).at(0), board.moves,"");
-    cout<<"checkRightPath was able to throw away "<<board.checkRightCount<<" paths."<<endl;
-    cout<<"checkAbovePath was able to throw away "<<board.checkAboveCount<<" paths."<<endl;
     cout<<"There are "<<board.solutions<<" possible solutions"<<endl;
     cout<<"Time taken: "<<(double)(clock() - tStart)/CLOCKS_PER_SEC<<" seconds "<<endl;
     myfile.close();
