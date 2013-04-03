@@ -41,18 +41,6 @@ void TourBoard::printBoard()
     }
 }
 
-//Handles special case
-bool TourBoard::firstRowVisited()
-{
-    for(int i = 0; i < (width - 1);i++)
-    {
-        if(!board.at(0).at(i).visited)
-            return false;
-    }    
-    return true;
-
-}
-
 //if square above has not been visited we can throw this path away.
 bool TourBoard::checkAbove(c_Square &square)
 {

@@ -20,8 +20,6 @@ public:
 
     void travel(c_Square &square, int moves_count, std::string path);
 
-    bool firstRowVisited();
-
     bool checkAbove(c_Square &square);
 
     bool checkRight(c_Square &square);
